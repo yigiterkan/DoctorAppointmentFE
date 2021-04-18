@@ -120,9 +120,13 @@ function App() {
               label="Doktor"
               style={{ width: 223 }}
             >
-              <MenuItem value={1}>Ali</MenuItem>
-              <MenuItem value={2}>Veli</MenuItem>
-              <MenuItem value={3}>Mahmut</MenuItem>
+              <MenuItem value={1}>Rana</MenuItem>
+              <MenuItem value={2}>Okan</MenuItem>
+              <MenuItem value={3}>Ayşe</MenuItem>
+              <MenuItem value={4}>Fatma</MenuItem>
+              <MenuItem value={5}>Ali</MenuItem>
+              <MenuItem value={6}>Ateş</MenuItem>
+              <MenuItem value={8}>Ali</MenuItem>
             </Select>
           </FormControl>
 
