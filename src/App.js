@@ -13,6 +13,7 @@ import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -30,6 +31,34 @@ const useStyles = makeStyles((theme) => ({
 function App() {
   const classes = useStyles();
   const [doctor, setDoctor] = React.useState('');
+  const [patientName, setPatientName] = React.useState('');
+  const [patientSurname, setPatientSurname] = React.useState('');
+  const [appointmentStartDate, setAppointmentStartDate] = React.useState('');
+  const [appointmentEndDate, setAppointmentEndDate] = React.useState('');
+  const [treatment, setTreatment] = React.useState('');
+
+  const saveAppointment = () => {
+    debugger;
+
+    axios(`https://localhost:44313/api/Appointments`, {
+      method: 'POST',
+      headers: {   'Accept': 'application/json'  , 'Content-Type': 'application/json'  },
+      data: JSON.stringify({
+        appointmentDoctorId: doctor,
+        AppointmentPatient: {
+          PatientName:patientName,
+          PatientSurname:patientSurname
+        },
+        appointmentStartDate: appointmentStartDate,
+        appointmentEndDate: appointmentEndDate,
+        treatment:treatment        
+      })
+    }).then((response) => {
+
+
+    });
+
+  }
 
   const handleChange = (event) => {
     setDoctor(event.target.value);
@@ -38,28 +67,42 @@ function App() {
   return (
     <div className="App">
       <AppBar position="static">
-        <Toolbar>         
+        <Toolbar>
           <Typography variant="h6" className={classes.title}>
             Randevu Alma Sistemi
-          </Typography>          
+          </Typography>
         </Toolbar>
       </AppBar>
-      
-      <br/>
+
+      <br />
 
       <Grid container className={classes.root} spacing={2}>
         <Grid item xs={12}>
-          <TextField id="hasta-adi" label="Hasta Adı" variant="outlined" />
+          <TextField id="hasta-adi" label="Hasta Adı" variant="outlined" value={patientName} onChange={(event) => { setPatientName(event.target.value) }} />
         </Grid>
         <Grid item xs={12}>
-          <TextField id="hasta-soyadi" label="Hasta Soyadı" variant="outlined" />
+          <TextField id="hasta-soyadi" label="Hasta Soyadı" variant="outlined" value={patientSurname} onChange={(event) => { setPatientSurname(event.target.value) }} />
         </Grid>
         <Grid item xs={12}>
           <TextField
             id="datetime-local"
             label="Next appointment"
             type="datetime-local"
-            defaultValue="2017-05-24T10:30"
+            value={appointmentStartDate}
+            onChange={(event) => { setAppointmentStartDate(event.target.value) }}
+            className={classes.textField}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            id="datetime-local"
+            label="Next appointment"
+            type="datetime-local"
+            value={appointmentEndDate}
+            onChange={(event) => { setAppointmentEndDate(event.target.value) }}
             className={classes.textField}
             InputLabelProps={{
               shrink: true,
@@ -75,22 +118,21 @@ function App() {
               value={doctor}
               onChange={handleChange}
               label="Doktor"
-              style={{ width: 200 }}
+              style={{ width: 223 }}
             >
-
-              <MenuItem value={10}>Ali</MenuItem>
-              <MenuItem value={20}>Veli</MenuItem>
-              <MenuItem value={30}>Mahmut</MenuItem>
+              <MenuItem value={1}>Ali</MenuItem>
+              <MenuItem value={2}>Veli</MenuItem>
+              <MenuItem value={3}>Mahmut</MenuItem>
             </Select>
           </FormControl>
 
         </Grid>
         <Grid item xs={12}>
-          <TextField id="treatment" label="Tedavi" variant="outlined" />
+          <TextField id="treatment" label="Tedavi" variant="outlined" value={treatment} onChange={(event) => { setTreatment(event.target.value) }} />
         </Grid>
 
         <Grid item xs={12}>
-            <Button variant="contained" color="primary">
+          <Button variant="contained" color="primary" onClick={saveAppointment}>
             Randevu Al
             </Button>
         </Grid>
